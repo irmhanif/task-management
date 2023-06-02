@@ -1,33 +1,30 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Board from "./Board";
 import Navbar from "./Navbar";
 import { IconButton } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
 import TransitionsModal from "../common/Modal";
 
-export default function Content() {
-  const [drawerState, setDrawerState] = React.useState(false);
-  const handleCollapse = () => {
-    setDrawerState(!drawerState);
-  };
+export default function Content(props) {
+  const {
+    drawerState
+  } = props;
+  const [boards, setBoards] = useState([
+    "Inbox",
+    "Starred",
+    "Send email",
+    "Drafts",
+  ])
+  const createBoard =(value) => {
+    setBoards([...boards, value])
+  }
   return (
     <Box
       sx={{ display: "flex", width: "100%", position: "relative" }}
       className="content"
     >
       <CssBaseline />
-      <div style={{ position: "absolute", top: "-40px", left: "12px" }}>
-        <IconButton
-          aria-label="more"
-          id="long-button"
-          aria-haspopup="true"
-          onClick={handleCollapse}
-        >
-          <MenuIcon className="navIcon" />
-        </IconButton>
-      </div>
 
       <div
         className="mt-4 navBarParent"
@@ -37,9 +34,14 @@ export default function Content() {
             : {}
         }
       >
-      <TransitionsModal />
+      <TransitionsModal 
+        btnAction={createBoard}
+        />
 
-        <Navbar />
+        <Navbar
+        boards={boards}
+        setBoards={setBoards}
+        />
       </div>
 
       <Box

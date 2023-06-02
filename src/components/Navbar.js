@@ -15,7 +15,8 @@ import { DeleteOutline } from "@mui/icons-material";
 
 const drawerWidth = 240;
 
-export default function Navbar() {
+export default function Navbar(props) {
+  const {boards, setBoards} = props
   const [selectedTab, setSelectedTab] = useState("");
 
   const handleTabClick = (tabName) => {
@@ -23,16 +24,11 @@ export default function Navbar() {
     console.log('selectedTab',selectedTab);
   };
 
-  const [boards, setBoards] = useState([
-    "Inbox",
-    "Starred",
-    "Send email",
-    "Drafts",
-  ]);
   const handleRemove = (tabName) => {
     let cloneBoards = [...boards];
     const index = cloneBoards.indexOf(tabName);
-    if (index > -1) {
+    let conf = window.confirm(`Are you sure, you want to remove ${tabName}`);
+    if (conf && index > -1) {
       // only splice array when item is found
       cloneBoards.splice(index, 1); // 2nd parameter means remove one item only
     }

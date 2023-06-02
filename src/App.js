@@ -1,5 +1,6 @@
 import Header from './components/Header';
 import './App.scss';
+import './index.css';
 import React, { useContext } from 'react';
 import { AppContext } from './Context';
 import Content from './components/Content';
@@ -10,11 +11,16 @@ function App() {
   const darkMode = theme.state.darkMode;
 
   console.log('darkMode dsd',darkMode)
+  const [drawerState, setDrawerState] = React.useState(false);
+  const handleCollapse = () => {
+    setDrawerState(!drawerState);
+  };
+
   return (
     <div className={`appContainer ${darkMode? 'dark' : 'light'}`}>
-      <Header />
+      <Header handleCollapse={handleCollapse}/>
       
-      <Content />
+      <Content drawerState={drawerState}/>
     </div>
   );
 }
