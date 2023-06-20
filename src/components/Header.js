@@ -1,7 +1,5 @@
 import React, { useContext } from "react";
 import Title from "../common/Title";
-import { Button } from "@mui/material";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import IconButton from "@mui/material/IconButton";
 
 import Brightness4Icon from "@mui/icons-material/Brightness4";
@@ -41,12 +39,6 @@ function Header(props) {
         <IconButton sx={{ ml: 1 }} onClick={onClick} color="inherit">
           {darkMode ? <Brightness4Icon /> : <Brightness7Icon />}
         </IconButton>
-        <Button variant="contained" className="mx-1">
-          + Add New Task
-        </Button>
-        <Button variant="text" className="p-0">
-          <MoreVertIcon />
-        </Button>
       </div>
     </header>
   );

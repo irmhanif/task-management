@@ -8,7 +8,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import { TransitionGroup } from "react-transition-group";
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
 import { DeleteOutline } from "@mui/icons-material";
@@ -16,24 +16,21 @@ import { DeleteOutline } from "@mui/icons-material";
 const drawerWidth = 240;
 
 export default function Navbar(props) {
-  const {boards, setBoards} = props
-  const [selectedTab, setSelectedTab] = useState("");
+  const {boards ={}, setBoards, activeBoard, setActiveBoard} = props
 
-  const handleTabClick = (tabName) => {
-    setSelectedTab(tabName);
-    console.log('selectedTab',selectedTab);
+  const handleTabClick = (tab) => {
+    setActiveBoard(tab.key)
   };
 
-  const handleRemove = (tabName) => {
-    let cloneBoards = [...boards];
-    const index = cloneBoards.indexOf(tabName);
-    let conf = window.confirm(`Are you sure, you want to remove ${tabName}`);
-    if (conf && index > -1) {
-      // only splice array when item is found
-      cloneBoards.splice(index, 1); // 2nd parameter means remove one item only
+  const handleRemove = (tab) => {
+    let cloneBoards = {...boards};
+    let conf = window.confirm(`Are you sure, you want to remove ${tab.title}`);
+    if (conf) {
+      delete cloneBoards[tab.key];
+      setBoards(cloneBoards);
+      setActiveBoard(cloneBoards?.[Object?.keys(cloneBoards)[0]]?.key)
     }
-
-    setBoards(cloneBoards);
+    
   };
   const renderItem = ({ item, handleRemove }) => {
     return (
@@ -44,7 +41,7 @@ export default function Navbar(props) {
         <ListItemIcon>
           <SpaceDashboardIcon className="navIcon" />
         </ListItemIcon>
-        <ListItemText primary={item} />
+        <ListItemText primary={item.title} />
         <IconButton
           aria-label="more"
           id="long-button"
@@ -76,8 +73,11 @@ export default function Navbar(props) {
         <Box className="drawerBOx" sx={{ overflow: "auto" }}>
           <List>
             <TransitionGroup>
-              {boards.map((item, index) => (
-                <Collapse key={item} onClick={() => handleTabClick(item)}>
+              {Object.values(boards).map((item, index) => (
+                <Collapse 
+                key={item.key} 
+                onClick={() => handleTabClick(item)} 
+                className={`navTab ${activeBoard===item?.key ? 'activeTab': 'tav'}`}>
                   {renderItem({ item, handleRemove })}
                 </Collapse>
               ))}
