@@ -9,13 +9,41 @@ export default function Board(props) {
   const { board, boards, setBoards, activeBoard } = props;
   const [tasks, setTasks] = useState({});
 
-  const renderTasks = (data) => {
+  const [selectedTasks, setSelectedTasks] = useState({});
+
+  const handleCheckBoxSelection = (event, columnKey) => {
+    const prevTask =
+      selectedTasks[columnKey] !== undefined ? selectedTasks[columnKey] : [];
+    const value = event.target.value;
+
+    if (event.target.checked) {
+      setSelectedTasks({
+        ...selectedTasks,
+        [columnKey]: [...prevTask, value],
+      });
+    } else {
+      let cloneData = JSON.parse(JSON.stringify(selectedTasks[columnKey]));
+      const index = cloneData.indexOf(value);
+      if (index !== -1) {
+        cloneData.splice(index, 1);
+        setSelectedTasks({
+          ...selectedTasks,
+          [columnKey]: cloneData,
+        });
+      }
+    }
+  };
+
+  const renderTasks = (data, columnKey) => {
     if (data) {
       return Object.values(data)?.map((task) => {
         return (
           <div key={task.id} className="taskDetails">
             <div className="checkBox">
-              <Checkbox />
+              <Checkbox
+                value={task.id}
+                onClick={(event) => handleCheckBoxSelection(event, columnKey)}
+              />
             </div>
             <div className="task">{task.value}</div>
           </div>
@@ -41,7 +69,7 @@ export default function Board(props) {
   };
 
   useEffect(() => {
-    if(board) constructData(board);
+    if (board) constructData(board);
   }, [board]);
 
   const handleAdd = (text) => {
@@ -77,7 +105,7 @@ export default function Board(props) {
           <div className="taskBasedContainer" id={cdata.key} key={cdata.key}>
             <div className="columnTitle">{cdata.title}</div>
             <div className="tasksContainer">
-              {renderTasks(tasks[cdata.key])}
+              {renderTasks(tasks[cdata.key], cdata.key)}
             </div>
           </div>
         ))}

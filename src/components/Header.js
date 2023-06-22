@@ -20,19 +20,19 @@ function Header(props) {
     <header className="p-4 w-100 d-flex justify-content-between header">
       <div className="d-flex justify-content-between row w-50">
         <div className="d-flex col-md-6">
-        <IconButton
+        {/* <IconButton
           aria-label="more"
           id="long-button"
           aria-haspopup="true"
           onClick={handleCollapse}
         >
           <MenuIcon className="navIcon" />
-        </IconButton>
+        </IconButton> */}
           <Title value={"Task Management"} />
         </div>
-        <div className="d-flex col-md-6">
+        {/* <div className="d-flex col-md-6">
           <Title variant={"h6"} value={"Page Name"} />
-        </div>
+        </div> */}
       </div>
 
       <div className="d-flex justify-content-between">
