@@ -21,69 +21,91 @@ export const generateRandomId = (length) => {
 };
 
 export const defaultColumns = [
-    {
-      key: "todo",
-      title: "To Do - Pending",
-    },
-    {
-      key: "inProgress",
-      title: "In Progress",
-    },
-    {
-      key: "done",
-      title: "Completed",
-    },
-  ];
-  
+  {
+    key: "todo",
+    title: "To Do - Pending",
+  },
+  {
+    key: "inProgress",
+    title: "In Progress",
+  },
+  {
+    key: "done",
+    title: "Completed",
+  },
+];
 
 export const defaultValue = {
-    test: {
-      key: "test",
-      title: "Inbox",
-      columns: defaultColumns,
-      tasks: {
-        "12": {
-          value: "Add cart",
-          id: "12",
-          status: "todo",
-        },
-        "13": {
-          value: "Add cartad sa",
-          id: "13",
-          status: "todo",
-        },
-        "12a": {
-          value: "Add cart 2",
-          id: "12d",
-          status: "inProgress",
-        },
-        "12b": {
-          value: "Add cart 3",
-          id: "12b",
-          status: "done",
-        },
+  test: {
+    key: "test",
+    title: "Inbox",
+    columns: defaultColumns,
+    tasks: {
+      12: {
+        value: "Add cart",
+        id: "12",
+        status: "todo",
+      },
+      13: {
+        value: "Add cartad sa",
+        id: "13",
+        status: "todo",
+      },
+      "12a": {
+        value: "Add cart 2",
+        id: "12d",
+        status: "inProgress",
+      },
+      "12b": {
+        value: "Add cart 3",
+        id: "12b",
+        status: "done",
       },
     },
-    test2: {
-      key: "test2",
-      title: "Starr",
-      columns: defaultColumns,
-      tasks: {
-        "12": {
-          value: "Add cart",
-          id: "12",
-          status: "todo",
-        },
-        "12a": {
-          value: "Add cart 2s",
-          id: "12d",
-          status: "inProgress",
-        },
-        "12b": {
-          value: "Add cart 2",
-          id: "12d",
-          status: "done",
-        },
+  },
+  test2: {
+    key: "test2",
+    title: "Starr",
+    columns: defaultColumns,
+    tasks: {
+      12: {
+        value: "Add cart",
+        id: "12",
+        status: "todo",
+      },
+      "12a": {
+        value: "Add cart 2s",
+        id: "12d",
+        status: "inProgress",
+      },
+      "12b": {
+        value: "Add cart 2",
+        id: "12d",
+        status: "done",
       },
     },
+  },
+};
+
+export function deepCopy(obj) {
+  if (typeof obj !== "object" || obj === null) {
+    return obj;
   }
+
+  let copy;
+  if (Array.isArray(obj)) {
+    copy = [];
+    for (let i = 0; i < obj.length; i++) {
+      copy[i] = deepCopy(obj[i]);
+    }
+  } else {
+    copy = {};
+    for (let key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        copy[key] = deepCopy(obj[key]);
+      }
+    }
+  }
+
+  return copy;
+}

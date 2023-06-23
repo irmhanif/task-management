@@ -3,7 +3,7 @@ import { Checkbox, IconButton, ImageList } from "@mui/material";
 import { useEffect } from "react";
 import { useState } from "react";
 import AddTask from "./AddTask";
-import { generateRandomId } from "../helper";
+import { deepCopy, generateRandomId } from "../helper";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SwipeRightAltIcon from "@mui/icons-material/SwipeRightAlt";
 import SwipeLeftAltIcon from "@mui/icons-material/SwipeLeftAlt";
@@ -25,7 +25,7 @@ export default function Board(props) {
         [columnKey]: [...prevTask, value],
       });
     } else {
-      let cloneData = JSON.parse(JSON.stringify(selectedTasks[columnKey]));
+      let cloneData = deepCopy(selectedTasks[columnKey]); //JSON.parse(JSON.stringify(selectedTasks[columnKey]));
       const index = cloneData.indexOf(value);
       if (index !== -1) {
         cloneData.splice(index, 1);
@@ -93,6 +93,18 @@ export default function Board(props) {
     });
   };
 
+  const handleDelete = (columnKey) => {
+    console.log('selectedTasks',selectedTasks);
+    const copiedTasks = deepCopy(selectedTasks[columnKey])
+    console.log('copiedTasks',copiedTasks);
+    console.log('boards',boards);
+    if(copiedTasks.length>0) {
+     
+    } else {
+      alert("select somthing")
+    }
+  }
+
   const renderControls = (data, index) => {
     return (
       <div className="controls">
@@ -100,7 +112,7 @@ export default function Board(props) {
           <SwipeLeftAltIcon />
         </IconButton>}
         <IconButton className="delete">
-          <DeleteIcon /> 
+          <DeleteIcon onClick={()=>handleDelete(data.key)} /> 
         </IconButton>
         {board?.columns?.length-1 !== index && <IconButton className="ControlRightmove">
           <SwipeRightAltIcon />
