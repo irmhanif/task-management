@@ -164,10 +164,24 @@ $darkColorText2: #20212c;
     }
 
     .columnTitle {
-        font-size: 22px;
         margin-bottom: 25px;
         position: sticky;
         padding: 20px 20px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h3 {
+            font-size: 20px;
+        }
+
+        .controls {
+            display: flex;
+
+            svg {
+                color: #fff;
+            }
+        }
     }
 
     .tasksContainer {

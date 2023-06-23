@@ -1,9 +1,12 @@
 import * as React from "react";
-import { Checkbox, ImageList } from "@mui/material";
+import { Checkbox, IconButton, ImageList } from "@mui/material";
 import { useEffect } from "react";
 import { useState } from "react";
 import AddTask from "./AddTask";
 import { generateRandomId } from "../helper";
+import DeleteIcon from "@mui/icons-material/Delete";
+import SwipeRightAltIcon from "@mui/icons-material/SwipeRightAlt";
+import SwipeLeftAltIcon from "@mui/icons-material/SwipeLeftAlt";
 
 export default function Board(props) {
   const { board, boards, setBoards, activeBoard } = props;
@@ -90,6 +93,22 @@ export default function Board(props) {
     });
   };
 
+  const renderControls = (data, index) => {
+    return (
+      <div className="controls">
+        {index!==0 && <IconButton className="ControlLeftmove">
+          <SwipeLeftAltIcon />
+        </IconButton>}
+        <IconButton className="delete">
+          <DeleteIcon /> 
+        </IconButton>
+        {board?.columns?.length-1 !== index && <IconButton className="ControlRightmove">
+          <SwipeRightAltIcon />
+        </IconButton>}
+      </div>
+    );
+  };
+
   return (
     <div className="boardContainer">
       <ImageList
@@ -101,9 +120,12 @@ export default function Board(props) {
         }}
         className={"boxCon"}
       >
-        {board?.columns.map((cdata) => (
+        {board?.columns.map((cdata, index) => (
           <div className="taskBasedContainer" id={cdata.key} key={cdata.key}>
-            <div className="columnTitle">{cdata.title}</div>
+            <div className="columnTitle">
+              <h3>{cdata.title}</h3>
+              {renderControls(cdata, index)}
+            </div>
             <div className="tasksContainer">
               {renderTasks(tasks[cdata.key], cdata.key)}
             </div>
