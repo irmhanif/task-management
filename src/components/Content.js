@@ -39,12 +39,6 @@ export default function Content(props) {
   };
 
 
-  useEffect(() => {
-    console.log('activeBoard',activeBoard)
-  
-    
-  }, [activeBoard])
-  
   useEffect(()=> {
     let taskList = getLocalStorage('tasks')
     setBoards(taskList)
@@ -52,13 +46,9 @@ export default function Content(props) {
   }, [])
 
   useEffect(()=> {
-    const taskList = getLocalStorage('tasks')
-    console.log(taskList, 'taskList')
-    console.log(boards, 'boards')
     if(boards && Object?.keys(boards)?.length>0) {
       setLocalStorage('tasks', boards)
     }
-     //setLocalStorage('tasks', boards)
   }, [boards])
 
   return (

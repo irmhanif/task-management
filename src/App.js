@@ -10,7 +10,6 @@ function App() {
   const theme = useContext(AppContext)
   const darkMode = theme.state.darkMode;
 
-  console.log('darkMode dsd',darkMode)
   const [drawerState, setDrawerState] = React.useState(false);
   const handleCollapse = () => {
     setDrawerState(!drawerState);
