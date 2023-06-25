@@ -16,21 +16,20 @@ import { DeleteOutline } from "@mui/icons-material";
 const drawerWidth = 240;
 
 export default function Navbar(props) {
-  const {boards ={}, setBoards, activeBoard, setActiveBoard} = props
+  const { boards = {}, setBoards, activeBoard, setActiveBoard } = props;
 
   const handleTabClick = (tab) => {
-    setActiveBoard(tab.key)
+    setActiveBoard(tab.key);
   };
 
   const handleRemove = (tab) => {
-    let cloneBoards = {...boards};
+    let cloneBoards = { ...boards };
     let conf = window.confirm(`Are you sure, you want to remove ${tab.title}`);
     if (conf) {
       delete cloneBoards[tab.key];
       setBoards(cloneBoards);
-      setActiveBoard(cloneBoards?.[Object?.keys(cloneBoards)[0]]?.key)
+      setActiveBoard(cloneBoards?.[Object?.keys(cloneBoards)[0]]?.key);
     }
-    
   };
   const renderItem = ({ item, handleRemove }) => {
     return (
@@ -56,7 +55,6 @@ export default function Navbar(props) {
 
   return (
     <div className="navBar">
-    
       <Drawer
         variant="persistent"
         open={true}
@@ -74,10 +72,13 @@ export default function Navbar(props) {
           <List>
             <TransitionGroup>
               {Object.values(boards).map((item, index) => (
-                <Collapse 
-                key={item.key} 
-                onClick={() => handleTabClick(item)} 
-                className={`navTab ${activeBoard===item?.key ? 'activeTab': 'tav'}`}>
+                <Collapse
+                  key={item.key}
+                  onClick={() => handleTabClick(item)}
+                  className={`navTab ${
+                    activeBoard === item?.key ? "activeTab" : "tav"
+                  }`}
+                >
                   {renderItem({ item, handleRemove })}
                 </Collapse>
               ))}

@@ -6,7 +6,12 @@ import Navbar from "./Navbar";
 import { Button, IconButton, Input } from "@mui/material";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { defaultColumns, generateRandomId, getLocalStorage, setLocalStorage } from "../helper";
+import {
+  defaultColumns,
+  generateRandomId,
+  getLocalStorage,
+  setLocalStorage,
+} from "../helper";
 import { useEffect } from "react";
 
 export default function Content(props) {
@@ -26,27 +31,26 @@ export default function Content(props) {
         title: boardValue,
         key: uniqId,
         columns: defaultColumns,
-        tasks: {}
+        tasks: {},
       },
-      ...boards
+      ...boards,
     });
     handleAddInput();
     setBoardValue("");
-    setActiveBoard(uniqId)
+    setActiveBoard(uniqId);
   };
 
+  useEffect(() => {
+    let taskList = getLocalStorage("tasks");
+    setBoards(taskList);
+    setActiveBoard(taskList?.[Object?.keys(taskList)[0]]?.key);
+  }, []);
 
-  useEffect(()=> {
-    let taskList = getLocalStorage('tasks')
-    setBoards(taskList)
-    setActiveBoard(taskList?.[Object?.keys(taskList)[0]]?.key)
-  }, [])
-
-  useEffect(()=> {
-    if(boards && Object?.keys(boards)?.length>0) {
-      setLocalStorage('tasks', boards)
+  useEffect(() => {
+    if (boards && Object?.keys(boards)?.length > 0) {
+      setLocalStorage("tasks", boards);
     }
-  }, [boards])
+  }, [boards]);
 
   return (
     <Box
@@ -99,7 +103,12 @@ export default function Content(props) {
         className="board"
         sx={{ flexGrow: 1, p: 3, pb: 0 }}
       >
-        <Board boards={boards} board={boards?.[activeBoard]} setBoards={setBoards} activeBoard={activeBoard}/>
+        <Board
+          boards={boards}
+          board={boards?.[activeBoard]}
+          setBoards={setBoards}
+          activeBoard={activeBoard}
+        />
       </Box>
     </Box>
   );

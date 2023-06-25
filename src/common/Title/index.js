@@ -1,13 +1,13 @@
-import { Typography } from '@mui/material'
-import React from 'react'
+import { Typography } from "@mui/material";
+import React from "react";
 
 function Title(props) {
-    const {value, variant='h5'} = props;
+  const { value, variant = "h5" } = props;
   return (
     <Typography variant={variant} component={variant}>
-        {value}
+      {value}
     </Typography>
-  )
+  );
 }
 
-export default Title
+export default Title;

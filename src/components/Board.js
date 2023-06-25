@@ -108,7 +108,7 @@ export default function Board(props) {
         delete copiedboards?.[board.key]?.tasks?.[task];
       });
       setBoards(copiedboards);
-      delete copiedSelectedTasks[columnKey]
+      delete copiedSelectedTasks[columnKey];
       setSelectedTasks(copiedSelectedTasks);
     } else {
       setBarState(true);
@@ -119,23 +119,31 @@ export default function Board(props) {
     let copiedSelectedTasks = deepCopy(selectedTasks);
     let copiedboards = deepCopy(boards);
     if (selectedTasks[data]?.length > 0) {
-    const newColumnKey = boards[board.key]?.columns[boards[board.key]?.columns.findIndex(column=> column.key === data) + position]?.key
+      const newColumnKey =
+        boards[board.key]?.columns[
+          boards[board.key]?.columns.findIndex(
+            (column) => column.key === data
+          ) + position
+        ]?.key;
       selectedTasks[data].forEach((task) => {
-        copiedboards[board.key].tasks[task].status = newColumnKey
+        copiedboards[board.key].tasks[task].status = newColumnKey;
       });
       setBoards(copiedboards);
-      delete copiedSelectedTasks[data]
+      delete copiedSelectedTasks[data];
       setSelectedTasks(copiedSelectedTasks);
     } else {
       setBarState(true);
     }
-  }
+  };
 
   const renderControls = (data, index) => {
     return (
       <div className="controls">
         {index !== 0 && (
-          <IconButton className="ControlLeftmove" onClick={()=>handleMove(data.key, -1)}>
+          <IconButton
+            className="ControlLeftmove"
+            onClick={() => handleMove(data.key, -1)}
+          >
             <SwipeLeftAltIcon />
           </IconButton>
         )}
@@ -143,7 +151,10 @@ export default function Board(props) {
           <DeleteIcon onClick={() => handleDelete(data.key)} />
         </IconButton>
         {board?.columns?.length - 1 !== index && (
-          <IconButton className="ControlRightmove" onClick={()=>handleMove(data.key, 1)}>
+          <IconButton
+            className="ControlRightmove"
+            onClick={() => handleMove(data.key, 1)}
+          >
             <SwipeRightAltIcon />
           </IconButton>
         )}

@@ -8,7 +8,7 @@ import { AppContext } from "../Context";
 
 function Header(props) {
   const theme = useContext(AppContext);
-  const {darkMode} = theme.state;
+  const { darkMode } = theme.state;
   const onClick = () => {
     if (darkMode) theme.dispatch({ type: "LIGHTMODE" });
     else theme.dispatch({ type: "DARKMODE" });
@@ -17,7 +17,7 @@ function Header(props) {
     <header className="p-4 w-100 d-flex justify-content-between header">
       <div className="d-flex justify-content-between row w-50">
         <div className="d-flex col-md-6">
-        {/* <IconButton
+          {/* <IconButton
           aria-label="more"
           id="long-button"
           aria-haspopup="true"
