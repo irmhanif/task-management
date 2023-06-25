@@ -1,5 +1,11 @@
 import * as React from "react";
-import { Checkbox, IconButton, ImageList } from "@mui/material";
+import {
+  Alert,
+  Checkbox,
+  IconButton,
+  ImageList,
+  Snackbar,
+} from "@mui/material";
 import { useEffect } from "react";
 import { useState } from "react";
 import AddTask from "./AddTask";
@@ -13,6 +19,7 @@ export default function Board(props) {
   const [tasks, setTasks] = useState({});
 
   const [selectedTasks, setSelectedTasks] = useState({});
+  const [barState, setBarState] = useState(false);
 
   const handleCheckBoxSelection = (event, columnKey) => {
     const prevTask =
@@ -94,35 +101,58 @@ export default function Board(props) {
   };
 
   const handleDelete = (columnKey) => {
-    console.log('selectedTasks',selectedTasks);
-    const copiedTasks = deepCopy(selectedTasks[columnKey])
-    console.log('copiedTasks',copiedTasks);
-    console.log('boards',boards);
-    if(copiedTasks.length>0) {
-     
+    let copiedboards = deepCopy(boards);
+    if (selectedTasks[columnKey]?.length > 0) {
+      selectedTasks[columnKey].forEach((task) => {
+        delete copiedboards?.[board.key]?.tasks?.[task];
+      });
+      setBoards(copiedboards);
+      setSelectedTasks([]);
     } else {
-      alert("select somthing")
+      setBarState(true);
     }
-  }
+  };
 
   const renderControls = (data, index) => {
     return (
       <div className="controls">
-        {index!==0 && <IconButton className="ControlLeftmove">
-          <SwipeLeftAltIcon />
-        </IconButton>}
+        {index !== 0 && (
+          <IconButton className="ControlLeftmove">
+            <SwipeLeftAltIcon />
+          </IconButton>
+        )}
         <IconButton className="delete">
-          <DeleteIcon onClick={()=>handleDelete(data.key)} /> 
+          <DeleteIcon onClick={() => handleDelete(data.key)} />
         </IconButton>
-        {board?.columns?.length-1 !== index && <IconButton className="ControlRightmove">
-          <SwipeRightAltIcon />
-        </IconButton>}
+        {board?.columns?.length - 1 !== index && (
+          <IconButton className="ControlRightmove">
+            <SwipeRightAltIcon />
+          </IconButton>
+        )}
       </div>
     );
   };
 
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setBarState(false);
+  };
+
   return (
     <div className="boardContainer">
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        open={barState}
+        autoHideDuration={6000}
+        onClose={handleClose}
+      >
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          Select atleast one tasks
+        </Alert>
+      </Snackbar>
+
       <ImageList
         sx={{
           gridAutoFlow: "column",
