@@ -33,9 +33,9 @@ export default function Board(props) {
       });
     } else {
       let cloneData = deepCopy(selectedTasks[columnKey]); //JSON.parse(JSON.stringify(selectedTasks[columnKey]));
-      const index = cloneData.indexOf(value);
+      const index = cloneData?.indexOf(value);
       if (index !== -1) {
-        cloneData.splice(index, 1);
+        cloneData?.splice(index, 1);
         setSelectedTasks({
           ...selectedTasks,
           [columnKey]: cloneData,
@@ -113,11 +113,25 @@ export default function Board(props) {
     }
   };
 
+  const handleMove = (data, position) => {
+    let copiedboards = deepCopy(boards);
+    if (selectedTasks[data]?.length > 0) {
+    const newColumnKey = boards[board.key]?.columns[boards[board.key]?.columns.findIndex(column=> column.key === data) + position]?.key
+      selectedTasks[data].forEach((task) => {
+        copiedboards[board.key].tasks[task].status = newColumnKey
+      });
+      setBoards(copiedboards);
+      setSelectedTasks([]);
+    } else {
+      setBarState(true);
+    }
+  }
+
   const renderControls = (data, index) => {
     return (
       <div className="controls">
         {index !== 0 && (
-          <IconButton className="ControlLeftmove">
+          <IconButton className="ControlLeftmove" onClick={()=>handleMove(data.key, -1)}>
             <SwipeLeftAltIcon />
           </IconButton>
         )}
@@ -125,7 +139,7 @@ export default function Board(props) {
           <DeleteIcon onClick={() => handleDelete(data.key)} />
         </IconButton>
         {board?.columns?.length - 1 !== index && (
-          <IconButton className="ControlRightmove">
+          <IconButton className="ControlRightmove" onClick={()=>handleMove(data.key, 1)}>
             <SwipeRightAltIcon />
           </IconButton>
         )}
