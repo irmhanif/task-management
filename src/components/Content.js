@@ -10,10 +10,7 @@ import { defaultColumns, generateRandomId, getLocalStorage, setLocalStorage } fr
 import { useEffect } from "react";
 
 export default function Content(props) {
-  const { drawerState } = props;
-  
-  const [boards, setBoards] = useState({});
-
+  const { drawerState, boards, setBoards } = props;
   const [addBox, setAddBox] = useState(false);
   const [boardValue, setBoardValue] = useState("");
   const [activeBoard, setActiveBoard] = useState(
