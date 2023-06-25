@@ -1,5 +1,5 @@
-import { Box } from "@mui/material";
 import React, { useState } from "react";
+import { Box, Tooltip } from "@mui/material";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import MicOffIcon from "@mui/icons-material/MicOff";
@@ -18,10 +18,14 @@ function AddTask(props) {
   return (
     <div className="addTask">
       <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-        <SentimentSatisfiedAltIcon
-          sx={{ color: "#919191", marginLeft: "16px" }}
-        />
-        <AttachFileIcon sx={{ color: "#919191", marginLeft: "16px" }} />
+        <Tooltip title="Not Available">
+          <SentimentSatisfiedAltIcon
+            sx={{ color: "#919191", marginLeft: "16px" }}
+          />
+        </Tooltip>
+        <Tooltip title="Not Available">
+          <AttachFileIcon sx={{ color: "#919191", marginLeft: "16px" }} />
+        </Tooltip>
         <input
           type="search"
           name="q"
@@ -32,7 +36,9 @@ function AddTask(props) {
           onChange={(e) => setText(e.target.value)}
           onKeyDown={handleKeyDown}
         />
-        <MicOffIcon sx={{ color: "#919191", marginLeft: "16px" }} />
+        <Tooltip title="Not Available">
+          <MicOffIcon sx={{ color: "#919191", marginLeft: "16px" }} />
+        </Tooltip>
       </Box>
     </div>
   );
