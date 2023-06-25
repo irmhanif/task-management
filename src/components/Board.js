@@ -101,19 +101,22 @@ export default function Board(props) {
   };
 
   const handleDelete = (columnKey) => {
+    let copiedSelectedTasks = deepCopy(selectedTasks);
     let copiedboards = deepCopy(boards);
     if (selectedTasks[columnKey]?.length > 0) {
       selectedTasks[columnKey].forEach((task) => {
         delete copiedboards?.[board.key]?.tasks?.[task];
       });
       setBoards(copiedboards);
-      setSelectedTasks([]);
+      delete copiedSelectedTasks[columnKey]
+      setSelectedTasks(copiedSelectedTasks);
     } else {
       setBarState(true);
     }
   };
 
   const handleMove = (data, position) => {
+    let copiedSelectedTasks = deepCopy(selectedTasks);
     let copiedboards = deepCopy(boards);
     if (selectedTasks[data]?.length > 0) {
     const newColumnKey = boards[board.key]?.columns[boards[board.key]?.columns.findIndex(column=> column.key === data) + position]?.key
@@ -121,7 +124,8 @@ export default function Board(props) {
         copiedboards[board.key].tasks[task].status = newColumnKey
       });
       setBoards(copiedboards);
-      setSelectedTasks([]);
+      delete copiedSelectedTasks[data]
+      setSelectedTasks(copiedSelectedTasks);
     } else {
       setBarState(true);
     }

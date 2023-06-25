@@ -5,13 +5,10 @@ import IconButton from "@mui/material/IconButton";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { AppContext } from "../Context";
-import MenuIcon from "@mui/icons-material/Menu";
 
 function Header(props) {
   const theme = useContext(AppContext);
-  const {handleCollapse} = props
-  const {darkMode, boards} = theme.state;
-  console.log("boards ", boards);
+  const {darkMode} = theme.state;
   const onClick = () => {
     if (darkMode) theme.dispatch({ type: "LIGHTMODE" });
     else theme.dispatch({ type: "DARKMODE" });
