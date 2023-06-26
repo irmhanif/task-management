@@ -45,8 +45,8 @@ inputs:
     required: false
     description: "Timeout in milliseconds for FTP operations"
   runs:
-    using: "html"
-    main: "/index.html"
+    using: "node16"
+    main: "/index.js"
 branding:
   icon: "upload-cloud"
   color: "blue"
