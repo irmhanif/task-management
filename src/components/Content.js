@@ -44,6 +44,7 @@ export default function Content(props) {
     let taskList = getLocalStorage("tasks");
     setBoards(taskList);
     setActiveBoard(taskList?.[Object?.keys(taskList)[0]]?.key);
+    /* eslint-disable */ 
   }, []);
 
   useEffect(() => {
