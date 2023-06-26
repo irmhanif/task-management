@@ -1,6 +1,6 @@
 name: "FTP Deploy"
 description: "Automate deploying websites and more with this GitHub action via FTP and FTPS"
-author: "Sam Kirkland"
+author: "Mohamed Idris M"
 inputs:
   server:
     required: true
@@ -44,9 +44,6 @@ inputs:
   timeout:
     required: false
     description: "Timeout in milliseconds for FTP operations"
-runs:
-  using: "node16"
-  main: "dist/index.js"
 branding:
   icon: "upload-cloud"
   color: "blue"
