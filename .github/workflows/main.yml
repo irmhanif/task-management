@@ -15,7 +15,7 @@ jobs:
       run: npm install
     - name: Building the project
       run: npm run build
-    - name: Sync files
+    - name: 🗃️Sync files
       uses: ./
       with:
         server: ${{ secrets.TODO_SITE_SERVER}}
